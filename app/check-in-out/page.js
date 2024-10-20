@@ -2,10 +2,10 @@
 
 import TitleAndBack from '../components/TitleAndBack'
 import Button from '../components/Button'
-import { getAllUsers } from './actions'
+import { getAllUsers } from '../server-actions/actions'
 import { useEffect, useState } from 'react'
 import FormRow from '../components/FormRow'
-import { startSession, endSession } from './actions'
+import { startSession, endSession } from '../server-actions/actions'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
