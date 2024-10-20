@@ -2,7 +2,7 @@ import Button from './components/Button'
 
 export default function Home() {
   return (
-    <main className='flex flex-col items-center justify-center h-full'>
+    <main className='flex flex-col h-full'>
       <h1 className='text-4xl font-bold text-center'>
         Welcome to the Brannon Exchange
       </h1>
