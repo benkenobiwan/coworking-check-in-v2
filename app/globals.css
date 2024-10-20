@@ -5,12 +5,14 @@
 :root {
   --background: #f4e0bb;
   --foreground: #3a2828;
+  --accent: #f4efe3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #3a2828;
     --foreground: #f4e0bb;
+    --accent: #3a2828;
   }
 }
 
@@ -24,4 +26,27 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border-radius: 10px;
+}
+
+/* For Firefox */
+* {
+  scrollbar-color: var(--foreground) var(--accent);
 }
