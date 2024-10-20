@@ -78,7 +78,13 @@ const CheckInOut = ({ searchParams }) => {
             Clear
           </Button>
         </div>
-        <div className='mt-6 overflow-auto flex flex-col gap-4 min-h-[20rem] h-[calc(100vh-40rem)]'>
+        <div
+          className={`mt-6 overflow-auto flex flex-col gap-4 min-h-[20rem] ${
+            direction === 'in'
+              ? 'h-[calc(100vh-40rem)]'
+              : 'h-[calc(100vh-35rem)]'
+          }`}
+        >
           {filteredUsers?.map((person) => {
             return (
               <button
