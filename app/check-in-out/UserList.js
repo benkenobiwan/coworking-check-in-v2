@@ -2,14 +2,18 @@
 
 import { useState } from 'react'
 import FormRow from '../components/FormRow'
-import Link from 'next/link'
 import Button from '../components/Button'
+import { startSession, endSession } from './actions'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 const UserList = ({ allUsers, direction }) => {
   const [filteredUsers, setFilteredUsers] = useState(allUsers)
   const [search, setSearch] = useState('')
+  const router = useRouter()
 
   const updateSearch = (e) => {
+    if (e?.preventDefault) e.preventDefault()
     const searchValue = e.currentTarget.value
     setSearch(searchValue)
     setFilteredUsers(
@@ -21,13 +25,13 @@ const UserList = ({ allUsers, direction }) => {
   const handleClick = async (person) => {
     try {
       if (direction === 'in') {
-        await apiFetch.post('/sessions/check-in', { id: person.id })
+        await startSession(person.id)
         toast.success('Check-in successful')
       } else {
-        await apiFetch.patch('/sessions/check-out', { id: person.id })
+        await endSession(person.id)
         toast.success('Check-out successful')
       }
-      navigate('..')
+      router.push('/')
     } catch (error) {
       toast.error(error?.response?.data?.message)
       console.error(error)
@@ -48,14 +52,14 @@ const UserList = ({ allUsers, direction }) => {
           inputClassName='h-10 text-xl text-foreground bg-[var(--background)] hover:bg-[var(--background)]/80 p-4 rounded-lg w-full placeholder:text-[var(--foreground)] hover:shadow-md transition-shadow'
         />
         <Button
-          href={`/check/${direction}`}
+          onClick={() => updateSearch({ currentTarget: { value: '' } })}
           className='h-10 flex items-center btn form-btn delete-btn text-xl'
           style='brown'
         >
           Clear
         </Button>
       </div>
-      <div className='mt-6 overflow-auto flex flex-col gap-4 min-h-[20rem] h-[calc(100vh-40rem)] '>
+      <div className='mt-6 overflow-auto flex flex-col gap-4 min-h-[20rem] h-[calc(100vh-40rem)]'>
         {filteredUsers?.map((person) => {
           return (
             <button

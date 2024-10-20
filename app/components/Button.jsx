@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Button = ({ href, children, style, className }) => {
+const Button = ({ href, children, style, className, onClick }) => {
   const commonStyles =
     'text-[var(--accent)] font-bold rounded-lg text-3xl text-center flex items-center justify-center transition-all p-2 shadow-md hover:shadow-lg'
 
@@ -14,10 +14,18 @@ const Button = ({ href, children, style, className }) => {
 
   const buttonStyle = `${commonStyles} ${styleClasses} ${className}`
 
+  if (href) {
+    return (
+      <Link href={href} className={buttonStyle}>
+        {children}
+      </Link>
+    )
+  }
+
   return (
-    <Link href={href} className={buttonStyle}>
+    <button className={buttonStyle} onClick={onClick}>
       {children}
-    </Link>
+    </button>
   )
 }
 
