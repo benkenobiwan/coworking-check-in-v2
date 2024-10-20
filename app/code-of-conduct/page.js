@@ -32,10 +32,10 @@ const articleContents = (
 
     <h5 className='text-xl font-semibold mb-2'>Living Our Mission</h5>
     <p className='mb-4'>
-      Following the Peak Street's mission statement, "To know Jesus Christ and
-      make him known… as a witness to the Kingdom of God," we promote a spirit
-      of kindness, respect, and inclusivity. We believe that our professional
-      lives should contribute to our witness for Christ.
+      Following the Peak Street&apos;s mission statement, &quot;To know Jesus
+      Christ and make him known… as a witness to the Kingdom of God,&quot; we
+      promote a spirit of kindness, respect, and inclusivity. We believe that
+      our professional lives should contribute to our witness for Christ.
     </p>
 
     <h5 className='text-xl font-semibold mb-2'>
@@ -102,8 +102,8 @@ const articleContents = (
       professional sphere. As members, we can hold each other accountable, share
       needs and prayers, and collaborate for the sake of the Gospel. By
       following these principles, we can create a Christ-centered environment
-      where members grow professionally and personally. Let's work together to
-      make Bare Bones Coworking a faithful witness to the Kingdom of God!
+      where members grow professionally and personally. Let&apos;s work together
+      to make Bare Bones Coworking a faithful witness to the Kingdom of God!
     </p>
   </>
 )
