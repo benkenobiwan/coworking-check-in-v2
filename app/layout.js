@@ -14,11 +14,11 @@ export default function RootLayout({ children }) {
       <body className='h-screen flex flex-col max-w-[1000px] mx-auto'>
         <header className='h-72 pt-3 pb-6 w-full flex justify-center'>
           <Image
-            src='/logo-beige.jpg'
+            src='/logo-beige.png'
             alt='Brannon Exchange'
             className='object-contain'
-            width={2000}
-            height={2000}
+            width={1000}
+            height={1000}
           />
         </header>
         <section className='flex justify-center flex-grow pb-4'>
