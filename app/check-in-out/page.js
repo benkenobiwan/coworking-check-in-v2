@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
 const CheckInOut = ({ searchParams }) => {
-  const [filteredUsers, setFilteredUsers] = useState([])
+  const [allUsers, setAllUsers] = useState([])
   const [search, setSearch] = useState('')
   const router = useRouter()
 
@@ -19,22 +19,26 @@ const CheckInOut = ({ searchParams }) => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       const allUsers = await getAllUsers(direction)
-      setFilteredUsers(allUsers)
+      setAllUsers(allUsers)
     }
     fetchAllUsers()
   }, [direction])
 
-  const updateSearch = (e) => {
-    if (e?.preventDefault) e.preventDefault()
-    const searchValue = e.currentTarget.value
-    setSearch(searchValue)
-    setFilteredUsers(
-      allUsers?.filter((user) =>
-        user.fields.Name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    )
+  const clickClear = () => {
+    setSearch('')
   }
-  const handleClick = async (person) => {
+
+  const changeSearch = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+    }
+  }
+
+  const clickPerson = async (person) => {
     try {
       if (direction === 'in') {
         await startSession(person.id)
@@ -49,29 +53,35 @@ const CheckInOut = ({ searchParams }) => {
       console.error(error)
     }
   }
+
   return (
     <div className='w-3/4 mx-auto flex flex-col gap-8'>
       <TitleAndBack title={`check ${direction}`} />
       {direction === 'in' && (
-        <Button href='../code-of-conduct' className='font-normal'>
+        <Button href='../code-of-conduct' className='font-normal !text-2xl p-2'>
           <h4>First time? Register here</h4>
         </Button>
       )}
-      <form className='m-0 mb-4 h-full p-6 pb-8 grid grid-rows-[auto_auto_1fr] text-center overflow-hidden bg-[var(--accent)] rounded-lg shadow-md'>
+      <form
+        className='m-0 mb-4 h-full p-6 pb-8 grid grid-rows-[auto_auto_1fr] text-center overflow-hidden bg-[var(--accent)] rounded-lg shadow-md'
+        onSubmit={(e) => e.preventDefault()}
+      >
         <h4 className='text-2xl'>Select your name to check {direction}</h4>
         <div className='mt-4 flex items-end gap-6 w-full justify-stretch'>
           <FormRow
             type='search'
             name='search'
-            defaultValue={search}
+            value={search}
+            notRequired
             placeholder='Search for your name'
-            onChange={updateSearch}
+            onChange={changeSearch}
+            onKeyDown={handleKeyDown}
             hideLabel
             className='w-full mb-0 text-xl'
             inputClassName='h-10 text-xl text-foreground bg-[var(--background)] hover:bg-[var(--background)]/80 p-4 rounded-lg w-full placeholder:text-[var(--foreground)] hover:shadow-md transition-shadow'
           />
           <Button
-            onClick={() => updateSearch({ currentTarget: { value: '' } })}
+            onClick={clickClear}
             className='h-10 flex items-center btn form-btn delete-btn text-xl'
             style='brown'
           >
@@ -85,18 +95,22 @@ const CheckInOut = ({ searchParams }) => {
               : 'h-[calc(100vh-35rem)]'
           }`}
         >
-          {filteredUsers?.map((person) => {
-            return (
-              <button
-                type='button'
-                className='m-0 mx-auto w-full py-4 px-8 bg-[var(--background)] shadow-md rounded-lg border-none text-xl hover:shadow-lg transition-shadow'
-                key={person.id}
-                onClick={() => handleClick(person)}
-              >
-                <h4>{person.fields.Name}</h4>
-              </button>
+          {allUsers
+            ?.filter((user) =>
+              user.fields.Name.toLowerCase().includes(search.toLowerCase())
             )
-          })}
+            ?.map((person) => {
+              return (
+                <button
+                  type='button'
+                  className='m-0 mx-auto w-full py-4 px-8 bg-[var(--background)] shadow-md rounded-lg border-none text-xl hover:shadow-lg transition-shadow'
+                  key={person.id}
+                  onClick={() => clickPerson(person)}
+                >
+                  <h4>{person.fields.Name}</h4>
+                </button>
+              )
+            })}
         </div>
       </form>
     </div>

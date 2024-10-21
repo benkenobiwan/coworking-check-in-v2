@@ -4,11 +4,13 @@ const FormRow = ({
   type,
   name,
   placeholder,
+  value,
   defaultValue,
   pattern,
   notRequired = false,
   autoComplete,
   onChange,
+  onKeyDown,
   className,
   inputClassName,
 }) => {
@@ -25,13 +27,16 @@ const FormRow = ({
         name={name}
         className={`${inputClassName}`}
         placeholder={placeholder}
-        defaultValue={defaultValue || ''}
+        value={value}
+        defaultValue={defaultValue}
         pattern={pattern}
         required={!notRequired}
         autoComplete={autoComplete}
         onChange={onChange}
+        onKeyDown={onKeyDown}
       />
     </div>
   )
 }
+
 export default FormRow
