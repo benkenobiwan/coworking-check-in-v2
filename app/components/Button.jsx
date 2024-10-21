@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Button = ({ href, children, style, className, onClick }) => {
   const commonStyles =
-    'text-[var(--accent)] font-bold rounded-lg text-3xl text-center flex items-center justify-center transition-all p-2 shadow-md hover:shadow-lg capitalize'
+    'text-[var(--accent)] font-bold rounded-lg text-4xl text-center flex items-center justify-center transition-all p-2 shadow-md hover:shadow-lg capitalize'
 
   const styleVariants = {
     blue: 'bg-[hsl(163,30%,60%)] hover:bg-[hsl(163,26%,50%)]',
