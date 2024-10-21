@@ -1,4 +1,6 @@
 import { ToastContainer } from 'react-toastify'
+import Image from 'next/image'
+import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 
 export const metadata = {
@@ -11,16 +13,18 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className='h-screen flex flex-col max-w-[1000px] mx-auto'>
         <header className='h-72 pt-3 pb-6 w-full flex justify-center'>
-          <img
+          <Image
             src='/logo-beige.jpg'
             alt='Brannon Exchange'
             className='object-contain'
+            width={2000}
+            height={2000}
           />
         </header>
         <section className='flex justify-center flex-grow pb-4'>
           {children}
         </section>
-        <ToastContainer position='bottom left' />
+        <ToastContainer position='top-left' />
       </body>
     </html>
   )
