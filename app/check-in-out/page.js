@@ -9,17 +9,24 @@ import { startSession, endSession } from '../server-actions/actions'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
+const PlaceholderButton = () => (
+  <div className='m-0 mx-auto w-full bg-[var(--background)] opacity-70 shadow-md rounded-lg border-none text-xl min-h-[60px] animate-pulse'></div>
+)
+
 const CheckInOut = ({ searchParams }) => {
   const [allUsers, setAllUsers] = useState([])
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
   const direction = searchParams.direction
 
   useEffect(() => {
     const fetchAllUsers = async () => {
+      setIsLoading(true)
       const allUsers = await getAllUsers(direction)
       setAllUsers(allUsers)
+      setIsLoading(false)
     }
     fetchAllUsers()
   }, [direction])
@@ -95,22 +102,26 @@ const CheckInOut = ({ searchParams }) => {
               : 'h-[calc(100vh-35rem)]'
           }`}
         >
-          {allUsers
-            ?.filter((user) =>
-              user.fields.Name.toLowerCase().includes(search.toLowerCase())
-            )
-            ?.map((person) => {
-              return (
-                <button
-                  type='button'
-                  className='m-0 mx-auto w-full py-4 px-8 bg-[var(--background)] shadow-md rounded-lg border-none text-xl hover:shadow-lg transition-shadow'
-                  key={person.id}
-                  onClick={() => clickPerson(person)}
-                >
-                  <h4>{person.fields.Name}</h4>
-                </button>
-              )
-            })}
+          {isLoading
+            ? Array(7)
+                .fill(0)
+                .map((_, index) => <PlaceholderButton key={index} />)
+            : allUsers
+                ?.filter((user) =>
+                  user.fields.Name.toLowerCase().includes(search.toLowerCase())
+                )
+                ?.map((person) => {
+                  return (
+                    <button
+                      type='button'
+                      className='m-0 mx-auto w-full py-4 px-8 bg-[var(--background)] shadow-md rounded-lg border-none hover:shadow-lg transition-shadow'
+                      key={person.id}
+                      onClick={() => clickPerson(person)}
+                    >
+                      <h4 className='text-xl'>{person.fields.Name}</h4>
+                    </button>
+                  )
+                })}
         </div>
       </form>
     </div>
